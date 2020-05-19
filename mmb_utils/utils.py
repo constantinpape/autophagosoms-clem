@@ -20,9 +20,7 @@ def add_dataset(root, dataset):
             json.dump(datasets, f)
 
 
-def check_dataset(root, dataset, overwrite, upload):
+def have_dataset(root, dataset):
     dset_file = os.path.join(root, 'datasets.json')
     datasets = _load_datasets(dset_file)
-    # TODO check the proper combinations of overwrite / upload
-    if dataset in datasets:
-        raise ValueError(f"Dataset name {dataset} exists already")
+    return dataset in datasets

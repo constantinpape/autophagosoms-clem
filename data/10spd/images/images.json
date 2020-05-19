@@ -1,0 +1,23 @@
+{
+  "fibsem-10spd-labels": {
+    "ColorMap": "Glasbey",
+    "MaxValue": 1000,
+    "MinValue": 0,
+    "Storage": {
+      "local": "local/fibsem-10spd-labels.xml",
+      "remote": "remote/fibsem-10spd-labels.xml"
+    },
+    "TableFolder": "tables/labels",
+    "Type": "Segmentation"
+  },
+  "fibsem-10spd-raw": {
+    "Color": "White",
+    "MaxValue": 255,
+    "MinValue": 0,
+    "Storage": {
+      "local": "local/fibsem-10spd-raw.xml",
+      "remote": "remote/fibsem-10spd-raw.xml"
+    },
+    "Type": "Image"
+  }
+}

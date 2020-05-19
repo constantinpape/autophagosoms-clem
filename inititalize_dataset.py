@@ -1,10 +1,10 @@
 import argparse
 import os
 
-# NOTE: I will refactor this into https://github.com/platybrowser/mmb-python eventually
+# NOTE I will refactor this into https://github.com/platybrowser/mmb-python eventually
 from mmpb.files.xml_utils import write_s3_xml
 from mmpb.release_helper import make_folder_structure
-from mmb_utils import (add_dataset, check_dataset,
+from mmb_utils import (add_dataset, have_dataset,
                        import_raw_volume,
                        initialize_bookmarks, initialize_image_dict)
 
@@ -28,13 +28,17 @@ def add_xml_for_s3(xml_path, data_path):
     print(mc_command)
 
 
-def initialize_dataset(dataset, path, resolution,
+def initialize_dataset(dataset, path, in_key, resolution,
                        overwrite, upload,
                        target='local', max_jobs=32):
-    check_dataset(ROOT, dataset, overwrite, upload)
     assert os.path.exists(path), path
+    # TODO check the proper combinations of overwrite / upload
+    if have_dataset(ROOT, dataset):
+        raise ValueError(f"Dataset name {dataset} exists already")
 
-    tmp_folder = './tmp_%s' % dataset
+    tmp_folder = f'./tmp_{dataset}'
+    print("Temporary files will be written to", tmp_folder,
+          "this folder can be savely removed after the computation is done")
 
     # create output folder structure
     output_folder = os.path.join(ROOT, dataset)
@@ -42,7 +46,7 @@ def initialize_dataset(dataset, path, resolution,
 
     # TODO naming schemen?
     out_path = os.path.join(output_folder, 'images', 'local', f'fibsem-{dataset}-raw.n5')
-    import_raw_volume(path, in_key, out_path, tmp_folder, resolution,
+    import_raw_volume(path, in_key, out_path, resolution, tmp_folder,
                       target=target, max_jobs=max_jobs)
 
     # TODO make/add mask?
@@ -61,9 +65,14 @@ def initialize_dataset(dataset, path, resolution,
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='')
+    desc = 'Initialize dataset by adding raw data and creating folder structure'
+    parser = argparse.ArgumentParser(description=desc)
+
     parser.add_argument('dataset', type=str, help='Name of the dataset to be added')
     parser.add_argument('path', type=str, help='Path to the raw data for this dataset')
+    parser.add_argument('--key', type=str, default='',
+                        help='Key to the input data (only necessary for n5/hd5 input data)')
+
     parser.add_argument('--resolution', type=float, nargs=3, default=DEFAULT_RESOLUTION)
     parser.add_argument('--upload', type=int, default=0,
                         help='Whether to upload the data to s3')
@@ -77,4 +86,4 @@ if __name__ == '__main__':
     assert not upload
     assert not overwrite
 
-    initialize_dataset(args.dataset, args.path, overwrite, upload)
+    initialize_dataset(args.dataset, args.path, args.key, args.resolution, overwrite, upload)
