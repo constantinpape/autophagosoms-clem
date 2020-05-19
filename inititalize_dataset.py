@@ -41,10 +41,11 @@ def initialize_dataset(dataset, path, resolution,
     make_folder_structure(output_folder)
 
     # TODO naming schemen?
-    out_path = os.path.join(output_folder, 'images', 'local', 'fibsem-raw.n5')
-    import_raw_volume(path, out_path, tmp_folder, resolution,
+    out_path = os.path.join(output_folder, 'images', 'local', f'fibsem-{dataset}-raw.n5')
+    import_raw_volume(path, in_key, out_path, tmp_folder, resolution,
                       target=target, max_jobs=max_jobs)
-    # TODO make mask?
+
+    # TODO make/add mask?
 
     xml_path = os.path.splitext(out_path)[0] + '.xml'
     if upload:
@@ -52,7 +53,7 @@ def initialize_dataset(dataset, path, resolution,
 
     # initialize the image dict and bookmarks
     initialize_image_dict(output_folder, xml_path)
-    initialize_bookmarks(output_folder)
+    initialize_bookmarks(output_folder, out_path)
 
     # register this stack in datasets.json
     add_dataset(ROOT, dataset)
@@ -62,7 +63,6 @@ def initialize_dataset(dataset, path, resolution,
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='')
     parser.add_argument('dataset', type=str, help='Name of the dataset to be added')
-    # TODO figure out which formats to support
     parser.add_argument('path', type=str, help='Path to the raw data for this dataset')
     parser.add_argument('--resolution', type=float, nargs=3, default=DEFAULT_RESOLUTION)
     parser.add_argument('--upload', type=int, default=0,

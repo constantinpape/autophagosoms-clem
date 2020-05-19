@@ -1,5 +1,6 @@
 import json
 import os
+from elf.io import open_file
 
 
 def initialize_image_dict(folder, xml_path):
@@ -28,10 +29,18 @@ def initialize_image_dict(folder, xml_path):
         json.dump(image_dict, f, indent=2, sort_keys=True)
 
 
-def initialize_bookmarks(folder):
+def initialize_bookmarks(folder, out_path):
     bookmark_dir = os.path.join(folder, 'misc', 'bookmarks')
     os.makedirs(bookmark_dir, exist_ok=True)
-    # TODO determine the default view
     bookmark_path = os.path.join(bookmark_dir, 'default.json')
+
+    with open_file(out_path, 'r') as f:
+        shape = f['setup0/timepoint0/s0'].shape
+        center = [sh // 2 for sh in shape]
+
+    bkmrk = {
+        "default": {"Position": center}
+    }
+
     with open(bookmark_path, 'w') as f:
-        json.dump({}, f)
+        json.dump(bkmrk, f)
