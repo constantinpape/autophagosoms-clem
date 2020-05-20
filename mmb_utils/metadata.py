@@ -60,7 +60,7 @@ def initialize_image_dict(folder, xml_path):
         json.dump(image_dict, f, indent=2, sort_keys=True)
 
 
-def initialize_bookmarks(folder, out_path):
+def initialize_bookmarks(folder, out_path, raw_name):
     bookmark_dir = os.path.join(folder, 'misc', 'bookmarks')
     os.makedirs(bookmark_dir, exist_ok=True)
     bookmark_path = os.path.join(bookmark_dir, 'default.json')
@@ -69,8 +69,10 @@ def initialize_bookmarks(folder, out_path):
         shape = f['setup0/timepoint0/s0'].shape
         center = [sh // 2 for sh in shape]
 
+    layer = {raw_name: {"MaxValue": 255, "MinValue": 0}}
     bkmrk = {
-        "default": {"Position": center}
+        "default": {"Layers": layer,
+                    "Position": center}
     }
 
     with open(bookmark_path, 'w') as f:

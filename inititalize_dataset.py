@@ -9,8 +9,8 @@ from mmb_utils import (add_dataset, have_dataset,
                        initialize_bookmarks, initialize_image_dict)
 
 ROOT = './data'
-# TODO
-DEFAULT_RESOLUTION = [1., 1., 1.]
+# we have an isotropic resolution of 5 nm
+DEFAULT_RESOLUTION = [0.005, 0.005, 0.005]
 
 
 def add_xml_for_s3(xml_path, data_path):
@@ -44,8 +44,8 @@ def initialize_dataset(dataset, path, in_key, resolution,
     output_folder = os.path.join(ROOT, dataset)
     make_folder_structure(output_folder)
 
-    # TODO naming schemen?
-    out_path = os.path.join(output_folder, 'images', 'local', f'fibsem-{dataset}-raw.n5')
+    raw_name = f'fibsem-{dataset}-raw'
+    out_path = os.path.join(output_folder, 'images', 'local', f'{raw_name}.n5')
     import_raw_volume(path, in_key, out_path, resolution, tmp_folder,
                       target=target, max_jobs=max_jobs)
 
@@ -57,7 +57,7 @@ def initialize_dataset(dataset, path, in_key, resolution,
 
     # initialize the image dict and bookmarks
     initialize_image_dict(output_folder, xml_path)
-    initialize_bookmarks(output_folder, out_path)
+    initialize_bookmarks(output_folder, out_path, raw_name)
 
     # register this stack in datasets.json
     add_dataset(ROOT, dataset)
