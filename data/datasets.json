@@ -1,1 +1,7 @@
-["10spd"]
+{
+  "datasets": [
+    "10spd",
+    "10spdbaf"
+  ],
+  "default": "10spdbaf"
+}

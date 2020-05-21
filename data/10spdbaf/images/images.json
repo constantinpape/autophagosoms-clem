@@ -1,0 +1,12 @@
+{
+  "fibsem-10spdbaf-raw": {
+    "Color": "White",
+    "MaxValue": 255,
+    "MinValue": 0,
+    "Storage": {
+      "local": "local/fibsem-10spdbaf-raw.xml",
+      "remote": "remote/fibsem-10spdbaf-raw.xml"
+    },
+    "Type": "Image"
+  }
+}

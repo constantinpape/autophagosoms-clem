@@ -78,7 +78,7 @@ if __name__ == '__main__':
                         help='Whether to upload the data to s3')
     parser.add_argument('--overwrite', type=int, default=0,
                         help='Whether to over-write an existing dataset')
-    parser.add_argument('--is_defult', type=int, default=0,
+    parser.add_argument('--is_default', type=int, default=0,
                         help='Is this the default dataset for the viewer?')
 
     args = parser.parse_args()

@@ -25,7 +25,7 @@ def add_dataset(root, dataset, is_default_dataset=False):
         dataset_dict['default'] = dataset
 
     with open(dset_file, 'w') as f:
-        json.dump(datasets, f, indent=2, sort_keys=True)
+        json.dump(dataset_dict, f, indent=2, sort_keys=True)
 
 
 def have_dataset(root, dataset):
