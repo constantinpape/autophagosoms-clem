@@ -29,7 +29,7 @@ def add_xml_for_s3(xml_path, data_path):
 
 
 def initialize_dataset(dataset, path, in_key, resolution,
-                       overwrite, upload,
+                       overwrite, upload, is_default,
                        target='local', max_jobs=32):
     assert os.path.exists(path), path
     # TODO check the proper combinations of overwrite / upload
@@ -60,7 +60,7 @@ def initialize_dataset(dataset, path, in_key, resolution,
     initialize_bookmarks(output_folder, out_path, raw_name)
 
     # register this stack in datasets.json
-    add_dataset(ROOT, dataset)
+    add_dataset(ROOT, dataset, is_default_dataset=is_default)
     print("You need to add the files in", output_folder, "to git")
 
 
@@ -78,6 +78,8 @@ if __name__ == '__main__':
                         help='Whether to upload the data to s3')
     parser.add_argument('--overwrite', type=int, default=0,
                         help='Whether to over-write an existing dataset')
+    parser.add_argument('--is_defult', type=int, default=0,
+                        help='Is this the default dataset for the viewer?')
 
     args = parser.parse_args()
 
@@ -86,4 +88,5 @@ if __name__ == '__main__':
     assert not upload
     assert not overwrite
 
-    initialize_dataset(args.dataset, args.path, args.key, args.resolution, overwrite, upload)
+    initialize_dataset(args.dataset, args.path, args.key, args.resolution,
+                       overwrite, upload, bool(args.is_default))
