@@ -69,10 +69,10 @@ def initialize_bookmarks(folder, out_path, raw_name):
         shape = f['setup0/timepoint0/s0'].shape
         center = [sh // 2 for sh in shape]
 
-    layer = {raw_name: {"MaxValue": 255, "MinValue": 0}}
+    layer = {raw_name: {"maxValue": 255, "minValue": 0}}
     bkmrk = {
-        "default": {"Layers": layer,
-                    "Position": center}
+        "default": {"layers": layer,
+                    "position": center}
     }
 
     with open(bookmark_path, 'w') as f:

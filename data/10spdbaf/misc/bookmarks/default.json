@@ -1,1 +1,1 @@
-{"default": {"Layers": {"fibsem-10spdbaf-raw": {"MaxValue": 255, "MinValue": 0}}, "Position": [300, 1299, 1763]}}
+{"default": {"layers": {"fibsem-10spdbaf-raw": {"maxValue": 255, "minValue": 0}}, "position": [300, 1299, 1763]}}
