@@ -22,7 +22,7 @@ def add_dataset(root, dataset, is_default_dataset=False):
         dataset_dict['datasets'] = datasets
 
     if is_default_dataset:
-        dataset_dict['default'] = dataset
+        dataset_dict['defaultDataset'] = dataset
 
     with open(dset_file, 'w') as f:
         json.dump(dataset_dict, f, indent=2, sort_keys=True)
