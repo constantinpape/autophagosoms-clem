@@ -16,18 +16,18 @@ def add_segmentation_to_image_dict(folder, xml_path, table_folder=None):
     rel_path = os.path.relpath(xml_path, image_folder)
 
     entry = {
-        "ColorMap": "Glasbey",
-        "MaxValue": 1000,
-        "MinValue": 0,
-        "Storage": {
+        "colorMap": "glasbey",
+        "maxValue": 1000,
+        "minValue": 0,
+        "storage": {
             "local": rel_path,
             "remote": rel_path.replace("local", "remote")
         },
-        "Type": "Segmentation"
+        "type": "segmentation"
     }
 
     if table_folder is not None:
-        entry.update({"TableFolder": os.path.relpath(table_folder, folder)})
+        entry.update({"tableFolder": os.path.relpath(table_folder, folder)})
 
     image_dict.update({seg_name: entry})
     with open(image_dict_path, 'w') as f:
@@ -45,14 +45,14 @@ def initialize_image_dict(folder, xml_path):
 
     image_dict = {
         raw_name: {
-            "Color": "White",
-            "MaxValue": 255,
-            "MinValue": 0,
-            "Storage": {
+            "color": "white",
+            "maxValue": 255,
+            "minValue": 0,
+            "storage": {
                 "local": rel_path,
                 "remote": rel_path.replace("local", "remote")
             },
-            "Type": "Image"
+            "type": "image"
         }
     }
 
