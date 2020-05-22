@@ -14,8 +14,7 @@ DEFAULT_RESOLUTION = [0.005, 0.005, 0.005]
 
 
 def add_xml_for_s3(xml_path, data_path):
-    # TODO would need a bucket for this
-    bucket_name = ''
+    bucket_name = 'autophagosomes'
     xml_out_path = xml_path.replace('local', 'remote')
 
     path_in_bucket = os.path.relpath(data_path, start=ROOT)
@@ -29,10 +28,8 @@ def add_xml_for_s3(xml_path, data_path):
 
 
 def initialize_dataset(dataset, path, in_key, resolution,
-                       overwrite, upload, is_default,
-                       target='local', max_jobs=32):
+                       is_default, target='local', max_jobs=32):
     assert os.path.exists(path), path
-    # TODO check the proper combinations of overwrite / upload
     if have_dataset(ROOT, dataset):
         raise ValueError(f"Dataset name {dataset} exists already")
 
@@ -52,8 +49,7 @@ def initialize_dataset(dataset, path, in_key, resolution,
     # TODO make/add mask?
 
     xml_path = os.path.splitext(out_path)[0] + '.xml'
-    if upload:
-        add_xml_for_s3(xml_path, out_path)
+    add_xml_for_s3(xml_path, out_path)
 
     # initialize the image dict and bookmarks
     initialize_image_dict(output_folder, xml_path)
@@ -74,19 +70,9 @@ if __name__ == '__main__':
                         help='Key to the input data (only necessary for n5/hd5 input data)')
 
     parser.add_argument('--resolution', type=float, nargs=3, default=DEFAULT_RESOLUTION)
-    parser.add_argument('--upload', type=int, default=0,
-                        help='Whether to upload the data to s3')
-    parser.add_argument('--overwrite', type=int, default=0,
-                        help='Whether to over-write an existing dataset')
     parser.add_argument('--is_default', type=int, default=0,
                         help='Is this the default dataset for the viewer?')
 
     args = parser.parse_args()
 
-    # TODO add support for these options
-    overwrite, upload = bool(args.overwrite), bool(args.upload)
-    assert not upload
-    assert not overwrite
-
-    initialize_dataset(args.dataset, args.path, args.key, args.resolution,
-                       overwrite, upload, bool(args.is_default))
+    initialize_dataset(args.dataset, args.path, args.key, args.resolution, bool(args.is_default))

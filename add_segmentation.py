@@ -3,10 +3,10 @@ import os
 # NOTE I will refactor this into https://github.com/platybrowser/mmb-python eventually
 from mmb_utils import add_segmentation_to_image_dict, import_segmentation, have_dataset
 from mmpb.attributes.base_attributes import base_attributes
+from initialize_dataset import add_xml_for_s3
 
 ROOT = './data'
-# TODO
-DEFAULT_RESOLUTION = [1., 1., 1.]
+DEFAULT_RESOLUTION = [0.005, 0.005, 0.005]
 
 
 def add_table(path, table_folder, resolution, tmp_folder, target, max_jobs):
@@ -15,7 +15,6 @@ def add_table(path, table_folder, resolution, tmp_folder, target, max_jobs):
                     tmp_folder, target, max_jobs, correct_anchors=False)
 
 
-# TODO enable upload to s3
 def add_segmentation(dataset, path, seg_name, key, resolution,
                      target='local', max_jobs=32):
     if not have_dataset(ROOT, dataset):
@@ -33,10 +32,10 @@ def add_segmentation(dataset, path, seg_name, key, resolution,
     add_table(out_path, table_folder, resolution, tmp_folder, target, max_jobs)
 
     xml_path = os.path.splitext(out_path)[0] + '.xml'
+    add_xml_for_s3(xml_path, out_path)
     add_segmentation_to_image_dict(folder, xml_path, table_folder)
 
 
-# TODO expose resolution
 if __name__ == '__main__':
     desc = 'Add segmentation to an existing dataset'
     parser = argparse.ArgumentParser(description=desc)

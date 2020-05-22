@@ -1,9 +1,6 @@
 <SpimData version="0.2">
   <BasePath type="relative">.</BasePath>
   <SequenceDescription>
-    <ImageLoader format="bdv.n5">
-      <n5 type="relative">fibsem-10spd-raw.n5</n5>
-    </ImageLoader>
     <ViewSetups>
       <Attributes name="channel">
         <Channel>
@@ -14,7 +11,7 @@
       <ViewSetup>
         <id>0</id>
         <name>Setup0</name>
-        <size>3074 8420 800</size>
+        <size>3526 2598 601</size>
         <voxelSize>
           <unit>micrometer</unit>
           <size>0.005 0.005 0.005</size>
@@ -28,6 +25,12 @@
       <first>0</first>
       <last>0</last>
     </Timepoints>
+    <ImageLoader format="bdv.n5.s3">
+      <Key>10spdbaf/images/local/fibsem-10spdbaf-raw.n5</Key>
+      <SigningRegion>us-west-2</SigningRegion>
+      <ServiceEndpoint>https://s3.embl.de</ServiceEndpoint>
+      <BucketName>autophagosomes</BucketName>
+    </ImageLoader>
   </SequenceDescription>
   <ViewRegistrations>
     <ViewRegistration setup="0" timepoint="0">
