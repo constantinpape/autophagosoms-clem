@@ -16,9 +16,8 @@ def add_segmentation_to_image_dict(folder, xml_path, table_folder=None):
     rel_path = os.path.relpath(xml_path, image_folder)
 
     entry = {
-        "colorMap": "glasbey",
-        "maxValue": 1000,
-        "minValue": 0,
+        "color": "glasbey",
+        "contrastLimits": [0., 1000.],
         "storage": {
             "local": rel_path,
             "remote": rel_path.replace("local", "remote")
@@ -46,8 +45,7 @@ def initialize_image_dict(folder, xml_path):
     image_dict = {
         raw_name: {
             "color": "white",
-            "maxValue": 255,
-            "minValue": 0,
+            "contrastLimits": [0., 255.],
             "storage": {
                 "local": rel_path,
                 "remote": rel_path.replace("local", "remote")

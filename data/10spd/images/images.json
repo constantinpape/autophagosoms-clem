@@ -1,8 +1,7 @@
 {
   "fibsem-10spd-labels": {
-    "colorMap": "glasbey",
-    "maxValue": 1000,
-    "minValue": 0,
+    "color": "glasbey",
+    "contrastLimits": [0.0, 1000.0],
     "storage": {
       "local": "local/fibsem-10spd-labels.xml",
       "remote": "remote/fibsem-10spd-labels.xml"
@@ -12,8 +11,7 @@
   },
   "fibsem-10spd-raw": {
     "color": "white",
-    "maxValue": 255,
-    "minValue": 0,
+    "contrastLimits": [0.0, 255.0],
     "storage": {
       "local": "local/fibsem-10spd-raw.xml",
       "remote": "remote/fibsem-10spd-raw.xml"
