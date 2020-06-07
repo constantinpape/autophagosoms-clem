@@ -38,7 +38,7 @@ def init_dataset(dataset, path, in_key, resolution,
 
     initialize_dataset(path, in_key, ROOT,
                        dataset, raw_name,
-                       resolution, DEFAULT_RESOLUTION, scale_factors,
+                       resolution, DEFAULT_CHUNKS, scale_factors,
                        is_default=is_default, target=target,
                        max_jobs=max_jobs, time_limit=time_limit)
 
@@ -55,8 +55,7 @@ if __name__ == '__main__':
 
     parser.add_argument('dataset', type=str, help='Name of the dataset to be added')
     parser.add_argument('path', type=str, help='Path to the raw data for this dataset')
-    parser.add_argument('--key', type=str, default='',
-                        help='Key to the input data (only necessary for n5/hd5 input data)')
+    parser.add_argument('key', type=str, help='Key to the input data (only necessary for n5/hd5 input data)')
 
     parser.add_argument('--resolution', type=float, nargs=3, default=DEFAULT_RESOLUTION)
     parser.add_argument('--is_default', type=int, default=0,
