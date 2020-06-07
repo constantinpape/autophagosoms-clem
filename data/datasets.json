@@ -1,7 +1,8 @@
 {
   "datasets": [
     "10spd",
-    "10spdbaf"
+    "10spdbaf",
+    "baf"
   ],
   "defaultDataset": "10spd"
 }
