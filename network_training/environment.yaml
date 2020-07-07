@@ -1,0 +1,20 @@
+channels:
+    - pytorch
+    - conda-forge
+    - defaults
+name:
+    autophago-train-env
+dependencies:
+    - cudatoolkit 10.2
+    - h5py
+    - imageio
+    - inferno
+    - neurofire
+    - pytorch
+    - scikit-image
+    - torchvision
+    - tqdm
+    - z5py
+    # try installing apex at some point
+    # https://anaconda.org/conda-forge/nvidia-apex
+    # - nvidia-apex
