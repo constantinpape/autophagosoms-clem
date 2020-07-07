@@ -12,4 +12,4 @@ conda activate autophago-train-env
 ```
 
 Note: you will need to choose a cuda version that is compatible with your GPU driver.
-You can change the cuda version that is being installed via [this line]().
+You can change the cuda version that is being installed via [this line](https://github.com/mobie/autophagosomes-clem-datasets/blob/master/network_training/environment.yaml#L8).
