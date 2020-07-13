@@ -32,7 +32,6 @@ def init_dataset(dataset, path, in_key, resolution,
                  time_limit=None):
     assert os.path.exists(path), path
 
-    # TODO need to make these settable if we want to add anisotropic data
     raw_name = 'fibsem-raw'
     scale_factors = 6 * [[2, 2, 2]]
 

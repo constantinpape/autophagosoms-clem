@@ -3,7 +3,9 @@
     "10spd",
     "10spdbaf",
     "baf",
-    "control"
+    "control",
+    "1spd",
+    "1spdbaf"
   ],
   "defaultDataset": "10spd"
 }

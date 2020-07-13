@@ -10,5 +10,41 @@
       "remote": "remote/fibsem-raw.xml"
     },
     "type": "image"
+  },
+  "srsim-blue": {
+    "color": "white",
+    "contrastLimits": [
+      0.0,
+      255.0
+    ],
+    "storage": {
+      "local": "local/srsim-blue.xml",
+      "remote": "remote/srsim-blue.xml"
+    },
+    "type": "image"
+  },
+  "srsim-green": {
+    "color": "white",
+    "contrastLimits": [
+      0.0,
+      255.0
+    ],
+    "storage": {
+      "local": "local/srsim-green.xml",
+      "remote": "remote/srsim-green.xml"
+    },
+    "type": "image"
+  },
+  "srsim-red": {
+    "color": "white",
+    "contrastLimits": [
+      0.0,
+      255.0
+    ],
+    "storage": {
+      "local": "local/srsim-red.xml",
+      "remote": "remote/srsim-red.xml"
+    },
+    "type": "image"
   }
 }
