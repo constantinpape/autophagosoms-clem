@@ -9,11 +9,13 @@ dependencies:
     - h5py
     - imageio
     - inferno
+    - napari
     - neurofire
     - pytorch
     - scikit-image
     - torchvision
     - tqdm
+    - vigra
     - z5py
     # try installing apex at some point
     # https://anaconda.org/conda-forge/nvidia-apex
