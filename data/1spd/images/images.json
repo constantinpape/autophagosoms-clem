@@ -1,4 +1,17 @@
 {
+  "fibsem-labels": {
+    "color": "randomFromGlasbey",
+    "contrastLimits": [
+      0.0,
+      1000.0
+    ],
+    "storage": {
+      "local": "local/fibsem-labels.xml",
+      "remote": "remote/fibsem-labels.xml"
+    },
+    "tableFolder": "../..",
+    "type": "segmentation"
+  },
   "fibsem-raw": {
     "color": "white",
     "contrastLimits": [

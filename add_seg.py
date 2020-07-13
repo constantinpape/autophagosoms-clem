@@ -13,8 +13,10 @@ def add_seg_to_dataset(dataset, path, seg_name, key, resolution,
                        target='local', max_jobs=32):
     scale_factors = 6 * [[2, 2, 2]]
 
+    seg_name = f'fibsem-{seg_name}'
+    tmp_folder = f'tmp_{dataset}_seg_name'
     add_segmentation(path, key,
-                     root=ROOT,
+                     root=ROOT, tmp_folder=tmp_folder,
                      dataset_name=dataset,
                      segmentation_name=seg_name,
                      resolution=resolution,
