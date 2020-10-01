@@ -3,9 +3,9 @@ channels:
     - conda-forge
     - defaults
 name:
-    autophago-train-env
+    autophago-seg-env
 dependencies:
-    - cudatoolkit >=10.2
+    - cudatoolkit >=10.2,<10.3
     - h5py
     - imageio
     - inferno
