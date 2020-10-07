@@ -4,18 +4,18 @@ import os
 import napari
 import z5py
 
-from vigra import labelVolumeWithBackground
+from scipy.ndimage import label
 
 
 def view_sample(name, scale=2, with_ccs=False):
-    path_raw = f'../../data/{name}/images/local/fibsem-{name}-raw.n5'
+    path_raw = f'../../data/{name}/images/local/fibsem-raw.n5'
     f = z5py.File(path_raw, 'r')
     ds_raw = f[f'setup0/timepoint0/s{scale}']
     print(ds_raw.shape)
     ds_raw.n_threads = 8
     raw = ds_raw[:]
 
-    path_labels = f'../../data/{name}/images/local/fibsem-{name}-labels.n5'
+    path_labels = f'../../data/{name}/images/local/fibsem-labels.n5'
     have_labels = os.path.exists(path_labels)
     if have_labels:
         f = z5py.File(path_labels, 'r')
@@ -30,7 +30,7 @@ def view_sample(name, scale=2, with_ccs=False):
 
     if have_labels and with_ccs:
         print("Run connected components ...")
-        labels_cc = labelVolumeWithBackground(labels)
+        labels_cc = label(labels)
 
     with napari.gui_qt():
         viewer = napari.Viewer()

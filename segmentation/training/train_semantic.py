@@ -10,12 +10,11 @@ from inferno.trainers.basic import Trainer
 from inferno.trainers.callbacks.scheduling import AutoLR
 from inferno.utils.io_utils import yaml2dict
 from inferno.trainers.callbacks.essentials import SaveAtBestValidationScore
-# from inferno.extensions.criteria import SorensenDiceLoss
 
 from inferno.trainers.callbacks.logging.tensorboard import TensorboardLogger
 
 import phago_network_utils.models as models
-from phago_network_utils.criteria import RobustDiceLoss
+from phago_network_utils.criteria import BCEDiceLoss
 from phago_network_utils.datasets import get_autophagosom_loader
 
 
@@ -32,7 +31,7 @@ def set_up_training(project_directory, config, data_config):
     model_name = config.get('model_name')
     model = getattr(models, model_name)(**config.get('model_kwargs'))
 
-    loss = RobustDiceLoss()
+    loss = BCEDiceLoss()
     loss_train = loss_val = metric = loss
 
     # Build trainer and validation metric
@@ -110,8 +109,9 @@ def training(project_directory,
     if config.get('devices'):
         logger.info("Using devices {}".format(config.get('devices')))
         trainer.cuda(config.get('devices'))
+        # TODO try to replace nvidia apex with pytorch.amp
         # mixed precision loss scaling has issues with semantic training
-        trainer.mixed_precision = True
+        trainer.mixed_precision = False
 
     # Go!
     logger.info("Lift off!")
@@ -134,11 +134,8 @@ def make_model_config(train_config_file, gpus):
 
 
 # configuration for training data
-def make_train_config(data_config_file, n_batches, name, only_new):
-    if only_new:
-        template = yaml2dict('./template_config/train_%s_only_new_labels.yaml' % name)
-    else:
-        template = yaml2dict('./template_config/train_%s.yaml' % name)
+def make_train_config(data_config_file, n_batches, name):
+    template = yaml2dict('./template_config/train_%s.yaml' % name)
     template['master_config']['affinity_config'] = None
     template['master_config']['train_semantic'] = True
     template['loader_config']['batch_size'] = n_batches
@@ -148,11 +145,8 @@ def make_train_config(data_config_file, n_batches, name, only_new):
 
 
 # configuration for validation data
-def make_validation_config(validation_config_file, name, only_new):
-    if only_new:
-        template = yaml2dict('./template_config/validation_%s_only_new_labels.yaml' % name)
-    else:
-        template = yaml2dict('./template_config/validation_%s.yaml' % name)
+def make_validation_config(validation_config_file, name):
+    template = yaml2dict('./template_config/validation_%s.yaml' % name)
     template['master_config']['affinity_config'] = None
     template['master_config']['train_semantic'] = True
     with open(validation_config_file, 'w') as f:
@@ -168,19 +162,16 @@ def copy_train_file(project_directory):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('project_directory', type=str)
-    parser.add_argument('name', type=str)
-    parser.add_argument('--only_new', type=int, default=1)
+    parser.add_argument('project_directory', type=str, help="Directory where the model and training state is stored")
+    parser.add_argument('name', type=str, help="Name for this training run")
     parser.add_argument('--gpus', nargs='+', default=[0], type=int)
     parser.add_argument('--max_train_iters', type=int, default=int(1e5))
     parser.add_argument('--from_checkpoint', type=int, default=0)
 
     args = parser.parse_args()
     name = args.name
-    only_new = bool(args.only_new)
-    assert only_new
 
-    project_directory = args.project_directory + "_%s" % name
+    project_directory = f"{args.project_directory}_{name}"
     from_checkpoint = bool(args.from_checkpoint)
     os.makedirs(project_directory, exist_ok=True)
 
@@ -197,8 +188,8 @@ def main():
     if not from_checkpoint:
         n_batches = len(gpus) * batch_size
         make_model_config(model_config, gpus)
-        make_train_config(train_config, n_batches, name, only_new)
-        make_validation_config(validation_config, name, only_new)
+        make_train_config(train_config, n_batches, name)
+        make_validation_config(validation_config, name)
         copy_train_file(project_directory)
 
     training(project_directory,
