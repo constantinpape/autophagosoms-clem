@@ -63,7 +63,7 @@ def make_template_config(sample_names, config_name, window_size, sample_size):
 
     train_config_path = os.path.join('./template_config', f'train_{config_name}.yaml')
     with open(train_config_path, 'w') as f:
-        yaml.dump(train_config_path, f)
+        yaml.dump(train_config, f)
 
     val_config_path = os.path.join('./template_config', f'validation_{config_name}.yaml')
     with open(val_config_path, 'w') as f:
@@ -75,6 +75,7 @@ def make_full_config():
     sampling_size = [8, 32, 32]
     names = ALL_NAMES
     config_name = 'fullV1'
+    os.makedirs('template_config', exist_ok=True)
     print("Make template config for", names)
     make_template_config(names, config_name, size, sampling_size)
 

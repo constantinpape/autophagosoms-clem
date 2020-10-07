@@ -1,0 +1,19 @@
+# The model arguments
+model_name: UNet3d
+model_kwargs:
+  in_channels: 1
+  out_channels: 6
+  initial_features: 32
+  gain: 2
+  depth: 3
+  final_activation: Sigmoid
+  norm: 'InstanceNorm'
+  pad_convs: True
+
+training_optimizer_kwargs:
+  method: Adam
+  lr: 0.00005
+  weight_decay: 0.0005
+
+devices:
+  - 0
