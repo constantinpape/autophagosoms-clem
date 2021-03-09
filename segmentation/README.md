@@ -7,7 +7,7 @@ Code for U-Net `training` for EM autophagosom segementation and `prediction` for
 
 Set up the training conda environment and activate it via
 ```shell
-conda create -f environment.yaml
+conda env create -f environment.yaml
 conda activate autophago-seg-env
 pip install -e .
 ```
