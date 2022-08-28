@@ -1,4 +1,4 @@
-*This project is deprecated and is not working with the current version of MoBIE any longer!*
+**This project is deprecated and is not working with the current version of MoBIE any longer!**
 
 # Autophagosom CLEM Data
 
